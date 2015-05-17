@@ -1,5 +1,5 @@
 #
-# This is a sample configuration file for the ngIRCd IRC daemon, which must
+# This is a sample configuration file for the ngIRCd-ronsor IRC daemon, which must
 # be customized to the local preferences and needs.
 #
 # Comments are started with "#" or ";".
@@ -138,7 +138,7 @@
 	# channels on the local server. By default, all supported channel
 	# types are allowed. Set this variable to the empty string to disallow
 	# creation of new channels by local clients at all.
-	;AllowedChannelTypes = #&+
+	AllowedChannelTypes = #&!+.
 
 	# Are remote IRC operators allowed to control this server, e.g.
 	# use commands like CONNECT, SQUIT, DIE, ...?
