@@ -22,7 +22,7 @@
 #define RPL_CREATED_MSG			"003 %s :This server has been started %s"
 #define RPL_MYINFO_MSG			"004 %s %s ngircd-ronsor-%s %s %s"
 #define RPL_ISUPPORTNET_MSG		"005 %s NETWORK=%s :is my network name"
-#define RPL_ISUPPORT1_MSG		"005 %s RFC2812 IRCD=ronsor CHARSET=UTF-8 CASEMAPPING=ascii PREFIX=(qov)!@+ CHANTYPES=%s CHANMODES=beI,k,l,imMnOPQRstVz CHANLIMIT=%s:%d :are supported on this server"
+#define RPL_ISUPPORT1_MSG		"005 %s RFC2812+ircd-ronsor-stable IRCD=ronsor CHARSET=UTF-8 CASEMAPPING=ascii PREFIX=(ov)@+ CHANTYPES=%s CHANMODES=beI,k,l,imMnOPQRstVz CHANLIMIT=%s:%d :are supported on this server"
 #define RPL_ISUPPORT2_MSG		"005 %s CHANNELLEN=%d NICKLEN=%d TOPICLEN=%d AWAYLEN=%d KICKLEN=%d MODES=%d MAXLIST=beI:%d EXCEPTS=e INVEX=I PENALTY :are supported on this server"
 
 #define RPL_TRACELINK_MSG		"200 %s Link %s-%s %s %s V%s %ld %d %d"
@@ -147,7 +147,7 @@
 #define ERR_CHANOPRIVSNEEDED_MSG	"482 %s %s :You are not channel operator"
 #define ERR_CHANOPPRIVTOOLOW_MSG	"482 %s %s :Your privileges are too low"
 #define ERR_KICKDENY_MSG		"482 %s %s :Cannot kick, %s is protected"
-#define ERR_CANTKILLSERVER_MSG		"483 %s :You can't kill a server!"
+#define ERR_CANTKILLSERVER_MSG		"483 %s :You can't kill a server! SEE SQUIT"
 #define ERR_RESTRICTED_MSG		"484 %s :Your connection is restricted"
 #define ERR_NICKREGISTER_MSG		"484 %s :Cannot modify user mode (+R) -- Use IRC services"
 #define ERR_NONONREG_MSG		"486 %s :Cannot send to user (+b) -- You must identify to a registered nick to private message %s"
