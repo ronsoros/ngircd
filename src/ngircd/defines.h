@@ -71,13 +71,13 @@
 #define RECONNECT_DELAY 3
 
 /** Configuration file name. */
-#define CONFIG_FILE "/ngircd.conf"
+#define CONFIG_FILE "/ircd.conf"
 
 /** Directory containing optional configuration snippets. */
-#define CONFIG_DIR "/ngircd.conf.d"
+#define CONFIG_DIR "/ircd.conf.d"
 
 /** Name of the MOTD file. */
-#define MOTD_FILE "/ngircd.motd"
+#define MOTD_FILE "/ircd.motd"
 
 /** Name of the help file. */
 #define HELP_FILE "/Commands.txt"
@@ -183,13 +183,13 @@
 #define CHANMODES "abehiIklmMnoOPqQrRstvVz"
 
 /** Supported channel types. */
-#define CHANTYPES "#&+"
+#define CHANTYPES "#!&+"
 
 /** Away message for users connected to linked servers. */
 #define DEFAULT_AWAY_MSG "Away"
 
 /** Default ID for "topic owner". */
-#define DEFAULT_TOPIC_ID "-Server-"
+#define DEFAULT_TOPIC_ID "server.int"
 
 /** Prefix for NOTICEs from the server to users. Some servers use '*'. */
 #define NOTICE_TXTPREFIX ""
@@ -207,7 +207,7 @@
 #define MAX_HNDL_MODES_ARG 5
 
 /** Max. number of WHO replies. */
-#define MAX_RPL_WHO 25
+#define MAX_RPL_WHO 2500
 
 /** Max. number of WHOIS replies. */
 #define MAX_RPL_WHOIS 10
