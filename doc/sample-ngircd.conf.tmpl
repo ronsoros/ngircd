@@ -1,3 +1,8 @@
+; ____                            
+;|  _ \ ___  _ __  ___  ___  _ __ 
+;| |_) / _ \| '_ \/ __|/ _ \| '__|
+;|  _ < (_) | | | \__ \ (_) | |   
+;|_| \_\___/|_| |_|___/\___/|_|   
 #
 # This is a sample configuration file for the ngIRCd-ronsor IRC daemon, which must
 # be customized to the local preferences and needs.
@@ -29,9 +34,9 @@
 
 	# Information about the server and the administrator, used by the
 	# ADMIN command. Not required by server but by RFC!
-	;AdminInfo1 = Description
-	;AdminInfo2 = Location
-	;AdminEMail = admin@irc.server
+	AdminInfo1 = Description
+	AdminInfo2 = Location
+	AdminEMail = admin@irc.server
 
 	# Text file which contains the ngIRCd help text. This file is required
 	# to display help texts when using the "HELP <cmd>" command.
@@ -46,10 +51,10 @@
 	# "0.0.0.0" or (if compiled with IPv6 support) "::,0.0.0.0"
 	# so the server listens on all IP addresses of the system by default.
 	;Listen = 127.0.0.1,192.168.0.1
-
+	Listen = ::,0.0.0.0
 	# Text file with the "message of the day" (MOTD). This message will
 	# be shown to all users connecting to the server:
-	;MotdFile = :ETCDIR:/ngircd.motd
+	MotdFile = :ETCDIR:/ircd.motd
 
 	# A simple Phrase (<256 chars) if you don't want to use a motd file.
 	;MotdPhrase = "Hello world!"
@@ -58,7 +63,7 @@
 	# is optional, should only contain ASCII characters, and can't contain
 	# spaces. It is only used to inform clients. The default is empty,
 	# so no network name is announced to clients.
-	;Network = aIRCnetwork
+	Network = NG-IRCNet
 
 	# Global password for all users needed to connect to the server.
 	# (Default: not set)
@@ -72,7 +77,7 @@
 
 	# Ports on which the server should listen. There may be more than
 	# one port, separated with ",". (Default: 6667)
-	;Ports = 6667, 6668, 6669
+	Ports = 6667, 6668, 6669
 
 	# Group ID under which the ngIRCd should run; you can use the name
 	# of the group or the numerical ID. ATTENTION: For this to work the
@@ -110,12 +115,12 @@
 	;MaxConnectionsIP = 5
 
 	# Maximum number of channels a user can be member of (0: no limit):
-	;MaxJoins = 10
+	MaxJoins = 100
 
 	# Maximum length of an user nickname (Default: 9, as in RFC 2812).
 	# Please note that all servers in an IRC network MUST use the same
 	# maximum nickname length!
-	;MaxNickLength = 9
+	MaxNickLength = 20
 
 	# Maximum number of channels returned in response to a /list
 	# command (0: unlimited):
@@ -142,7 +147,7 @@
 
 	# Are remote IRC operators allowed to control this server, e.g.
 	# use commands like CONNECT, SQUIT, DIE, ...?
-	;AllowRemoteOper = no
+	AllowRemoteOper = no
 
 	# A directory to chroot in when everything is initialized. It
 	# doesn't need to be populated if ngIRCd is compiled as a static
@@ -153,12 +158,12 @@
 
 	# Set this hostname for every client instead of the real one.
 	# Use %x to add the hashed value of the original hostname.
-	;CloakHost = cloaked.host
+	;DONT USE CloakHost =
 
 	# Use this hostname for hostname cloaking on clients that have the
 	# user mode "+x" set, instead of the name of the server.
 	# Use %x to add the hashed value of the original hostname.
-	;CloakHostModeX = cloaked.user
+	CloakHostModeX = IRCNet-%x.com
 
 	# The Salt for cloaked hostname hashing. When undefined a random
 	# hash is generated after each server start.
@@ -174,15 +179,15 @@
 	# Default user mode(s) to set on new local clients. Please note that
 	# only modes can be set that the client could set using regular MODE
 	# commands, you can't set "a" (away) for example! Default: none.
-	;DefaultUserModes = i
+	DefaultUserModes = ix
 
 	# Do DNS lookups when a client connects to the server.
-	;DNS = yes
+	DNS = yes
 
 	# Do IDENT lookups if ngIRCd has been compiled with support for it.
 	# Users identified using IDENT are registered without the "~" character
 	# prepended to their user name.
-	;Ident = yes
+	Ident = yes
 
 	# Directory containing configuration snippets (*.conf), that should
 	# be read in after parsing this configuration file.
@@ -195,18 +200,18 @@
 	# Normally ngIRCd doesn't send any messages to a client until it is
 	# registered. Enable this option to let the daemon send "NOTICE AUTH"
 	# messages to clients while connecting.
-	;NoticeAuth = no
+	NoticeAuth = no
 
 	# Should IRC Operators be allowed to use the MODE command even if
 	# they are not(!) channel-operators?
-	;OperCanUseMode = no
+	OperCanUseMode = yes
 
 	# Should IRC Operators get AutoOp (+o) in persistent (+P) channels?
 	;OperChanPAutoOp = yes
 
 	# Mask IRC Operator mode requests as if they were coming from the
 	# server? (This is a compatibility hack for ircd-irc2 servers)
-	;OperServerMode = no
+	OperServerMode = yes
 
 	# Use PAM if ngIRCd has been compiled with support for it.
 	# Users identified using PAM are registered without the "~" character
@@ -246,50 +251,50 @@
 	# be used. (Default: not set)
 	;WebircPassword = xyz
 
-;[SSL]
+[SSL]
 	# SSL-related configuration options. Please note that this section
 	# is only available when ngIRCd is compiled with support for SSL!
 	# So don't forget to remove the ";" above if this is the case ...
 
 	# SSL Server Key Certificate
-	;CertFile = :ETCDIR:/ssl/server-cert.pem
+	CertFile = :ETCDIR:/ssl/server-cert.pem
 
 	# Select cipher suites allowed for SSL/TLS connections. This defaults
 	# to HIGH:!aNULL:@STRENGTH (OpenSSL) or SECURE128 (GnuTLS).
 	# See 'man 1ssl ciphers' (OpenSSL) or 'man 3 gnutls_priority_init'
 	# (GnuTLS) for details.
 	# For OpenSSL:
-	;CipherList = HIGH:!aNULL:@STRENGTH:!SSLv3
+	CipherList = HIGH:!aNULL:@STRENGTH:!SSLv3
 	# For GnuTLS:
 	;CipherList = SECURE128:-VERS-SSL3.0
 
 	# Diffie-Hellman parameters
-	;DHFile = :ETCDIR:/ssl/dhparams.pem
+	DHFile = :ETCDIR:/ssl/dhparams.pem
 
 	# SSL Server Key
-	;KeyFile = :ETCDIR:/ssl/server-key.pem
+	KeyFile = :ETCDIR:/ssl/server-key.pem
 
 	# password to decrypt SSLKeyFile (OpenSSL only)
 	;KeyFilePassword = secret
 
 	# Additional Listen Ports that expect SSL/TLS encrypted connections
-	;Ports = 6697, 9999
+	Ports = 6697, 9999
 
 [Operator]
 	# [Operator] sections are used to define IRC Operators. There may be
 	# more than one [Operator] block, one for each local operator.
 
 	# ID of the operator (may be different of the nickname)
-	;Name = TheOper
+	Name = TheOper
 
 	# Password of the IRC operator
-	;Password = ThePwd
+	Password = ThePwd
 
 	# Optional Mask from which /OPER will be accepted
-	;Mask = *!ident@somewhere.example.com
+	Mask = *!ident@somewhere.example.com
 
-[Operator]
-	# More [Operator] sections, if you like ...
+;[Operator]
+;	# More [Operator] sections, if you like ...
 
 [Server]
 	# Other servers are configured in [Server] sections. If you
@@ -365,13 +370,13 @@
 	# There may be more than one [Channel] block, one for each channel.
 
 	# Name of the channel
-	;Name = #TheName
+	Name = +lobby
 
 	# Topic for this channel
-	;Topic = a great topic
+	Topic = Lobby Channel
 
 	# Initial channel modes
-	;Modes = tnk
+	Modes = n
 
 	# initial channel password (mode k)
 	;Key = Secret
