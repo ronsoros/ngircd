@@ -312,7 +312,7 @@
 
 	# IRC name of the remote server, must match the "Name" variable in
 	# the [Global] section of the other server (when using ngIRCd).
-	;Name = irc2.example.net
+	Name = *
 
 	# Internet host name or IP address of the peer (only required when
 	# this server should establish the connection).
@@ -328,11 +328,11 @@
 
 	# Own password for the connection. This password has to be configured
 	# as "PeerPassword" on the other server.
-	;MyPassword = MySecret
+	MyPassword = pass
 
 	# Foreign password for this connection. This password has to be
 	# configured as "MyPassword" on the other server.
-	;PeerPassword = PeerSecret
+	PeerPassword = pass
 
 	# Group of this server (optional)
 	;Group = 123
