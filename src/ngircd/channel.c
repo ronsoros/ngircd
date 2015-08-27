@@ -352,16 +352,16 @@ Channel_Kick(CLIENT *Peer, CLIENT *Target, CLIENT *Origin, const char *Name,
 		    !Channel_UserHasMode(chan, Target, 'q') &&
 		    !Channel_UserHasMode(chan, Target, 'a'))
 			can_kick = true;
-			
-		/* Half Op can't kick owner | admin | op */ 
+
+		/* Half Op can't kick owner | admin | op */
 		else if (Channel_UserHasMode(chan, Peer, 'h') &&
 		    !Channel_UserHasMode(chan, Target, 'q') &&
 		    !Channel_UserHasMode(chan, Target, 'a') &&
 		    !Channel_UserHasMode(chan, Target, 'o'))
 			can_kick = true;
-		
+
 		/* IRC operators & IRCd with OperCanMode enabled
-		 * can kick anyways regardless of privilege */	
+		 * can kick anyways regardless of privilege */
 		else if(Client_HasMode(Origin, 'o') && Conf_OperCanMode)
 		    can_kick = true;
 
@@ -1044,7 +1044,7 @@ Remove_Client( int Type, CHANNEL *Chan, CLIENT *Client, CLIENT *Origin, const ch
 	switch( Type )
 	{
 		case REMOVE_QUIT:
-			/* QUIT: other servers have already been notified, 
+			/* QUIT: other servers have already been notified,
 			 * see Client_Destroy(); so only inform other clients
 			 * in same channel. */
 			assert( InformServer == false );
@@ -1098,29 +1098,29 @@ Remove_Client( int Type, CHANNEL *Chan, CLIENT *Client, CLIENT *Origin, const ch
 
 
 GLOBAL bool
-Channel_AddBan(CHANNEL *c, const char *mask )
+Channel_AddBan(CHANNEL *c, const char *mask, const char *who )
 {
 	struct list_head *h = Channel_GetListBans(c);
 	LogDebug("Adding \"%s\" to \"%s\" ban list", mask, Channel_Name(c));
-	return Lists_Add(h, mask, false, NULL);
+	return Lists_Add(h, mask, time(NULL), who, false);
 }
 
 
 GLOBAL bool
-Channel_AddExcept(CHANNEL *c, const char *mask )
+Channel_AddExcept(CHANNEL *c, const char *mask, const char *who )
 {
 	struct list_head *h = Channel_GetListExcepts(c);
 	LogDebug("Adding \"%s\" to \"%s\" exception list", mask, Channel_Name(c));
-	return Lists_Add(h, mask, false, NULL);
+	return Lists_Add(h, mask, time(NULL), who, false);
 }
 
 
 GLOBAL bool
-Channel_AddInvite(CHANNEL *c, const char *mask, bool onlyonce)
+Channel_AddInvite(CHANNEL *c, const char *mask, bool onlyonce, const char *who )
 {
 	struct list_head *h = Channel_GetListInvites(c);
 	LogDebug("Adding \"%s\" to \"%s\" invite list", mask, Channel_Name(c));
-	return Lists_Add(h, mask, onlyonce, NULL);
+	return Lists_Add(h, mask, time(NULL), who, onlyonce);
 }
 
 
@@ -1137,7 +1137,9 @@ ShowChannelList(struct list_head *head, CLIENT *Client, CHANNEL *Channel,
 	while (e) {
 		if (!IRC_WriteStrClient(Client, msg, Client_ID(Client),
 					Channel_Name(Channel),
-					Lists_GetMask(e)))
+					Lists_GetMask(e),
+					Lists_GetReason(e),
+					Lists_GetValidity(e)))
 			return DISCONNECTED;
 		e = Lists_GetNext(e);
 	}

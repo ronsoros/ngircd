@@ -21,7 +21,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <strings.h>
-
+#include <fnmatch.h>
 #include "conn-func.h"
 #include "conn-zip.h"
 #include "conf.h"
@@ -73,7 +73,7 @@ IRC_SERVER( CLIENT *Client, REQUEST *Req )
 
 		/* Get configuration index of new remote server ... */
 		for (i = 0; i < MAX_SERVERS; i++)
-			if (strcasecmp(Req->argv[0], Conf_Server[i].name) == 0)
+			if (fnmatch( Conf_Server[i].name, Req->argv[0], 0) == 0)
 				break;
 
 		/* Make sure the remote server is configured here */

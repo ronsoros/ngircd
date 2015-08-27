@@ -530,7 +530,7 @@ Pidfile_Create(pid_t pid)
 		close(pidfd);
 		return;
 	}
-	
+
 	if (write(pidfd, pidbuf, (size_t)len) != (ssize_t)len)
 		Log(LOG_ERR, "Can't write PID file (%s): %s!", Conf_PidFile,
 		    strerror(errno));
@@ -721,9 +721,10 @@ NGIRCd_Init(bool NGIRCd_NoDaemon)
 			Log(LOG_ERR, "Can't change group ID to %s(%u): %s!",
 			    grp ? grp->gr_name : "?", Conf_GID,
 			    strerror(real_errno));
-			if (real_errno != EPERM) 
+			if (real_errno != EPERM)
 				goto out;
 		}
+#ifdef HAVE_SETGROUPS
 		if (setgroups(0, NULL) != 0) {
 			real_errno = errno;
 			Log(LOG_ERR, "Can't drop supplementary group IDs: %s!",
@@ -731,6 +732,10 @@ NGIRCd_Init(bool NGIRCd_NoDaemon)
 			if (real_errno != EPERM)
 				goto out;
 		}
+#else
+		Log(LOG_WARNING,
+		    "Can't drop supplementary group IDs: setgroups(3) missing!");
+#endif
 	}
 #endif
 

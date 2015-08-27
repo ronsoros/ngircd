@@ -364,7 +364,7 @@ Conf_Test( void )
 		       ? (const char*) array_start(&Conf_Motd) : "");
 	}
 	printf("  Network = %s\n", Conf_Network);
-	if (!Conf_PAM) 
+	if (!Conf_PAM)
 		printf("  Password = %s\n", Conf_ServerPwd);
 	printf("  PidFile = %s\n", Conf_PidFile);
 	printf("  Ports = ");
@@ -412,7 +412,7 @@ Conf_Test( void )
 #endif
 	printf("  IncludeDir = %s\n", Conf_IncludeDir);
 	printf("  MorePrivacy = %s\n", yesno_to_str(Conf_MorePrivacy));
-	printf("  NoticeAuth = %s\n", yesno_to_str(Conf_NoticeAuth));
+	printf("  NoticeBeforeRegistration = %s\n", yesno_to_str(Conf_NoticeBeforeRegistration));
 	printf("  OperCanUseMode = %s\n", yesno_to_str(Conf_OperCanMode));
 	printf("  OperChanPAutoOp = %s\n", yesno_to_str(Conf_OperChanPAutoOp));
 	printf("  OperServerMode = %s\n", yesno_to_str(Conf_OperServerMode));
@@ -797,7 +797,7 @@ Set_Defaults(bool InitServers)
 #endif
 	strcpy(Conf_IncludeDir, "");
 	Conf_MorePrivacy = false;
-	Conf_NoticeAuth = false;
+	Conf_NoticeBeforeRegistration = false;
 	Conf_OperCanMode = false;
 	Conf_OperChanPAutoOp = true;
 	Conf_OperServerMode = false;
@@ -1797,7 +1797,19 @@ Handle_OPTIONS(const char *File, int Line, char *Var, char *Arg)
 		return;
 	}
 	if (strcasecmp(Var, "NoticeAuth") == 0) {
-		Conf_NoticeAuth = Check_ArgIsTrue(Arg);
+		/*
+		 * TODO: This section and support for "NoticeAuth" variable
+		 * could be removed starting with ngIRCd release 24 (one
+		 * release after marking it "deprecated") ...
+		 */
+		Config_Error(LOG_WARNING,
+			     "%s, line %d (section \"Options\"): \"%s\" is deprecated, please use \"NoticeBeforeRegistration\"!",
+			     File, Line, Var);
+		Conf_NoticeBeforeRegistration = Check_ArgIsTrue(Arg);
+		return;
+	}
+	if (strcasecmp(Var, "NoticeBeforeRegistration") == 0) {
+		Conf_NoticeBeforeRegistration = Check_ArgIsTrue(Arg);
 		return;
 	}
 	if (strcasecmp(Var, "OperCanUseMode") == 0) {

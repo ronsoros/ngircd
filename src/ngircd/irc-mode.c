@@ -580,6 +580,7 @@ Channel_Mode(CLIENT *Client, REQUEST *Req, CLIENT *Origin, CHANNEL *Channel)
 		case 'M': /* Only identified nicks can write */
 		case 'm': /* Moderated */
 		case 'n': /* Only members can write */
+		case 'N': /* Can't change nick while on this channel */
 		case 'Q': /* No kicks */
 		case 't': /* Topic locked */
 			if(is_oper || is_machine || is_owner ||
@@ -1017,15 +1018,15 @@ Add_To_List(char what, CLIENT *Prefix, CLIENT *Client, CHANNEL *Channel,
 
 	switch (what) {
 		case 'I':
-			if (!Channel_AddInvite(Channel, mask, false))
+			if (!Channel_AddInvite(Channel, mask, false, Client_ID(Client)))
 				return CONNECTED;
 			break;
 		case 'b':
-			if (!Channel_AddBan(Channel, mask))
+			if (!Channel_AddBan(Channel, mask, Client_ID(Client)))
 				return CONNECTED;
 			break;
 		case 'e':
-			if (!Channel_AddExcept(Channel, mask))
+			if (!Channel_AddExcept(Channel, mask, Client_ID(Client)))
 				return CONNECTED;
 			break;
 	}

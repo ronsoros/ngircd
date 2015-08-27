@@ -328,7 +328,7 @@ Conn_Init( void )
 		array_bytes(&My_ConnArray));
 
 	assert(array_length(&My_ConnArray, sizeof(CONNECTION)) >= (size_t)Pool_Size);
-	
+
 	array_free( &My_Listeners );
 
 	for (i = 0; i < Pool_Size; i++)
@@ -796,7 +796,7 @@ Conn_Handler(void)
 GLOBAL bool
 Conn_WriteStr(CONN_ID Idx, const char *Format, ...)
 #else
-GLOBAL bool 
+GLOBAL bool
 Conn_WriteStr(Idx, Format, va_alist)
 CONN_ID Idx;
 const char *Format;
@@ -829,7 +829,7 @@ va_dcl
 		 * IRC_WriteXXX() functions when the prefix of this server had
 		 * to be added to an already "quite long" command line which
 		 * has been received from a regular IRC client, for example.
-		 * 
+		 *
 		 * We are not allowed to send such "oversized" messages to
 		 * other servers and clients, see RFC 2812 2.3 and 2813 3.3
 		 * ("these messages SHALL NOT exceed 512 characters in length,
@@ -1487,16 +1487,16 @@ Conn_StartLogin(CONN_ID Idx)
 		ident_sock = My_Connections[Idx].sock;
 #endif
 
-	if (Conf_NoticeAuth) {
-		/* Send "NOTICE AUTH" messages to the client */
+	if (Conf_NoticeBeforeRegistration) {
+		/* Send "NOTICE *" messages to the client */
 #ifdef IDENTAUTH
 		if (Conf_Ident)
 			(void)Conn_WriteStr(Idx,
-				"NOTICE AUTH :*** Looking up your hostname and checking ident");
+				"NOTICE * :*** Looking up your hostname and checking ident");
 		else
 #endif
 			(void)Conn_WriteStr(Idx,
-				"NOTICE AUTH :*** Looking up your hostname");
+				"NOTICE * :*** Looking up your hostname");
 		/* Send buffered data to the client, but break on errors
 		 * because Handle_Write() would have closed the connection
 		 * again in this case! */
@@ -1583,7 +1583,7 @@ Read_Request( CONN_ID Idx )
 	if (len == 0) {
 		LogDebug("Client \"%s:%u\" is closing connection %d ...",
 			 My_Connections[Idx].host,
-			 ng_ipaddr_tostr(&My_Connections[Idx].addr), Idx);
+			 ng_ipaddr_getport(&My_Connections[Idx].addr), Idx);
 		Conn_Close(Idx, NULL, "Client closed connection", false);
 		return;
 	}
@@ -2265,9 +2265,9 @@ cb_Read_Resolver_Result( int r_fd, UNUSED short events )
 		strlcpy(My_Connections[i].host, readbuf,
 			sizeof(My_Connections[i].host));
 		Client_SetHostname(c, readbuf);
-		if (Conf_NoticeAuth)
+		if (Conf_NoticeBeforeRegistration)
 			(void)Conn_WriteStr(i,
-					"NOTICE AUTH :*** Found your hostname: %s",
+					"NOTICE * :*** Found your hostname: %s",
 					My_Connections[i].host);
 #ifdef IDENTAUTH
 		++identptr;
@@ -2291,22 +2291,22 @@ cb_Read_Resolver_Result( int r_fd, UNUSED short events )
 				    i, identptr);
 				Client_SetUser(c, identptr, true);
 			}
-			if (Conf_NoticeAuth) {
+			if (Conf_NoticeBeforeRegistration) {
 				(void)Conn_WriteStr(i,
-					"NOTICE AUTH :*** Got %sident response%s%s",
+					"NOTICE * :*** Got %sident response%s%s",
 					*ptr ? "invalid " : "",
 					*ptr ? "" : ": ",
 					*ptr ? "" : identptr);
 			}
 		} else if(Conf_Ident) {
 			Log(LOG_INFO, "IDENT lookup for connection %d: no result.", i);
-			if (Conf_NoticeAuth)
+			if (Conf_NoticeBeforeRegistration)
 				(void)Conn_WriteStr(i,
-					"NOTICE AUTH :*** No ident response");
+					"NOTICE * :*** No ident response");
 		}
 #endif
 
-		if (Conf_NoticeAuth) {
+		if (Conf_NoticeBeforeRegistration) {
 			/* Send buffered data to the client, but break on
 			 * errors because Handle_Write() would have closed
 			 * the connection again in this case! */
@@ -2364,7 +2364,7 @@ Simple_Message(int Sock, const char *Msg)
  * @returns	Pointer to CLIENT structure.
  */
 GLOBAL CLIENT *
-Conn_GetClient( CONN_ID Idx ) 
+Conn_GetClient( CONN_ID Idx )
 {
 	CONNECTION *c;
 
