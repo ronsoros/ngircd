@@ -547,7 +547,7 @@ Conf_SetServer( int ConfServer, CONN_ID Idx )
 	assert( Idx > NONE );
 
 	if (Conf_Server[ConfServer].conn_id > NONE &&
-	    Conf_Server[ConfServer].conn_id != Idx) {
+	    Conf_Server[ConfServer].conn_id != Idx && strstr(Conf_Server[ConfServer].name, "*") == NULL) {
 		Log(LOG_ERR,
 		    "Connection %d: Server configuration of \"%s\" already in use by connection %d!",
 		    Idx, Conf_Server[ConfServer].name,
