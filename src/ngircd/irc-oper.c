@@ -403,7 +403,8 @@ IRC_xLINE(CLIENT *Client, REQUEST *Req)
 	switch(Req->command[0]) {
 		case 'g':
 		case 'G':
-			return
+			return;
+			break;
 		case 'k':
 		case 'K':
 			class = CLASS_KLINE; class_c = 'K';
