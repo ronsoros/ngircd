@@ -133,7 +133,6 @@ IRC_KILL(CLIENT *Client, REQUEST *Req)
 
 	assert (Client != NULL);
 	assert (Req != NULL);
-
 	if (Client_Type(Client) != CLIENT_SERVER && !Op_Check(Client, Req))
 		return Op_NoPrivileges(Client, Req);
 
@@ -348,6 +347,8 @@ IRC_KillClient(CLIENT *Client, CLIENT *From, const char *Nick, const char *Reaso
 		LogDebug("Client with nick \"%s\" is unknown, not forwaring.", Nick);
 		return CONNECTED;
 	}
+	if (!strstr(Req->argv[1], "ollision") == NULL && Client_Conn(c) == true) {
+		return CONNECTED
 
 	/* Inform other servers */
 	IRC_WriteStrServersPrefix(From ? Client : NULL,
