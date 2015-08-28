@@ -250,35 +250,35 @@
 	# Web-to-IRC gateways. If not set/empty, the WEBIRC command can't
 	# be used. (Default: not set)
 	;WebircPassword = xyz
-
-[SSL]
+; please enable this and setup ssl!
+;[SSL]
 	# SSL-related configuration options. Please note that this section
 	# is only available when ngIRCd is compiled with support for SSL!
 	# So don't forget to remove the ";" above if this is the case ...
 
 	# SSL Server Key Certificate
-	CertFile = :ETCDIR:/ssl/server-cert.pem
+;	CertFile = :ETCDIR:/ssl/server-cert.pem
 
 	# Select cipher suites allowed for SSL/TLS connections. This defaults
 	# to HIGH:!aNULL:@STRENGTH (OpenSSL) or SECURE128 (GnuTLS).
 	# See 'man 1ssl ciphers' (OpenSSL) or 'man 3 gnutls_priority_init'
 	# (GnuTLS) for details.
 	# For OpenSSL:
-	CipherList = HIGH:!aNULL:@STRENGTH:!SSLv3
+;	CipherList = HIGH:!aNULL:@STRENGTH:!SSLv3
 	# For GnuTLS:
 	;CipherList = SECURE128:-VERS-SSL3.0
 
 	# Diffie-Hellman parameters
-	DHFile = :ETCDIR:/ssl/dhparams.pem
+;	DHFile = :ETCDIR:/ssl/dhparams.pem
 
 	# SSL Server Key
-	KeyFile = :ETCDIR:/ssl/server-key.pem
+;	KeyFile = :ETCDIR:/ssl/server-key.pem
 
 	# password to decrypt SSLKeyFile (OpenSSL only)
 	;KeyFilePassword = secret
 
 	# Additional Listen Ports that expect SSL/TLS encrypted connections
-	Ports = 6697, 9999
+;	Ports = 6697, 9999
 
 [Operator]
 	# [Operator] sections are used to define IRC Operators. There may be
