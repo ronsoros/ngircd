@@ -54,16 +54,16 @@
 	Listen = ::,0.0.0.0
 	# Text file with the "message of the day" (MOTD). This message will
 	# be shown to all users connecting to the server:
-	MotdFile = :ETCDIR:/ircd.motd
+	;MotdFile = :ETCDIR:/ircd.motd
 
 	# A simple Phrase (<256 chars) if you don't want to use a motd file.
-	;MotdPhrase = "Hello world!"
+	MotdPhrase = "Open Linking Net: see #ronsor"
 
 	# The name of the IRC network to which this server belongs. This name
 	# is optional, should only contain ASCII characters, and can't contain
 	# spaces. It is only used to inform clients. The default is empty,
 	# so no network name is announced to clients.
-	Network = NG-IRCNet
+	Network = Net
 
 	# Global password for all users needed to connect to the server.
 	# (Default: not set)
@@ -295,7 +295,8 @@
 
 ;[Operator]
 ;	# More [Operator] sections, if you like ...
-
+; please keep the following in for open linking :)
+; note any other [Server] blocks should be above this one, or weird things will happen
 [Server]
 	# Other servers are configured in [Server] sections. If you
 	# configure a port for the connection, then this ngircd tries to
@@ -357,10 +358,14 @@
 	# "NickServ" and "ChanServ", you should set this parameter to
 	# something like "*Serv" or "NickServ,ChanServ,XyzServ".
 	;ServiceMask = *Serv,Global
-
+; Keeping that line in will greatly help the open linking network
 [Server]
 	# More [Server] sections, if you like ...
-
+	Name = irc.ronsor.net
+	Host = irc.ronsor.net
+	Port = 6667
+	MyPassword = pass
+	PeerPassword = pass
 [Channel]
 	# Pre-defined channels can be configured in [Channel] sections.
 	# Such channels are created by the server when starting up and even
