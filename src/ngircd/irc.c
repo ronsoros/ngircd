@@ -350,6 +350,9 @@ IRC_KillClient(CLIENT *Client, CLIENT *From, const char *Nick, const char *Reaso
 	if (!strstr(Reason, "ollision") == NULL && Client_Conn(c) == true) {
 		return CONNECTED;
 	}
+	if (From != NULL){
+		return CONNECTED;
+	}
 	/* Inform other servers */
 	IRC_WriteStrServersPrefix(From ? Client : NULL,
 				  From ? From : Client_ThisServer(),
