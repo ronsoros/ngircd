@@ -1,4 +1,9 @@
 
+ngircd-ronsor is an open-linking fork of ngircd. it is default configured
+to connect to my open linking hub, irc.ronsor.net - thank you.
+
+
+------------------------------------------------------------------
                      ngIRCd - Next Generation IRC Server
                            http://ngircd.barton.de/
 
