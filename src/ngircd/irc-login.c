@@ -64,8 +64,9 @@ IRC_PASS( CLIENT *Client, REQUEST *Req )
 		/* Not yet registered "unknown" connection, PASS with one
 		 * argument: either a regular client, service, or server
 		 * using the old RFC 1459 section 4.1.1 syntax. */
-		LogDebug("Connection %d: got PASS command (RFC 1459) ...",
+		LogDebug("Connection %d: got PASS command (RFC 1459), denying ...",
 			 Client_Conn(Client));
+		return IRC_WriteErrClient(Client, "FUCK YOU", Client_ID(Client), Req->command);
 	} else if ((Client_Type(Client) == CLIENT_UNKNOWN ||
 		    Client_Type(Client) == CLIENT_UNKNOWNSERVER) &&
 		   (Req->argc == 3 || Req->argc == 4)) {
